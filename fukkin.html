@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      margin: 0 auto;
+      background-color: antiquewhite;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8em;
+      margin: 0.1em;
+    }
+
+    #saikou,
+    #heikin {
+      width: 4em;
+    }
+
+    #saikou {
+      color: red;
+    }
+
+    #heikin {
+      color: blue;
+    }
+
+    #total {
+      color: deeppink;
+    }
+
+    table {
+      margin: auto;
+    }
+
+    #plus {
+      width: 50%;
+      margin: auto;
+    }
+
+    #num {
+      font-size: 1em;
+      text-align: center;
+      width: 2em;
+      display: inline-block;
+      margin: auto;
+    }
+
+    #button {
+      width: 30%;
+      margin: 1em auto 0.3em auto;
+    }
+
+    #change {
+      display: inline-block;
+      width: 2em;
+      background-color: white;
+      height: 1.3em;
+      line-height: 1.3em;
+      cursor: pointer;
+      float: right;
+    }
+
+    #plus {
+      text-align: center;
+    }
+
+    .number {
+      width: 4em;
+    }
+
+    #sc {
+      overflow: scroll;
+    }
+
+    [data-input="1"] {
+      background-color: burlywood;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+
+      body {
+        width: 100%;
+        font-size: 5vw;
+      }
+
+    }
+
+    @media (min-width: 700px) {
+
+      body {
+        width: 700px;
+        font-size: 35px;
+      }
+
+    }
+  </style>
+  <title>腹筋</title>
+</head>
+
+<body>
+  <h1>腹筋</h1>
+  <table>
+    <tr>
+      <th>最高</th>
+      <th>平均</th>
+      <th>合計</th>
+    </tr>
+    <tr>
+      <th id="saikou"></th>
+      <th id="heikin"></th>
+      <th id="total"></th>
+    </tr>
+  </table>
+  <div id="button"><input type="tel" id="num"><span id="change">更新</span></div>
+  <div id="plus" data-input="1"></div>
+</body>
+
+<script>
+
+  const time = 1580007600000;
+  const day = 86400000;
+  let f = localStorage.getItem('fukkin');
+  if (!f) f = '[100,220,100,150,200,200,300,200,110,130,100,130]';
+  f = JSON.parse(f);
+  document.getElementById('plus').innerText = `${f.length + 1}日目を追加`;
+
+  let saikou = 0;
+  let total = 0;
+  let t = '<div id="sc"><table class="table">';
+  for (let i = 0; i < f.length; i++) {
+    let d = new Date(time + (f.length - i - 1) * day);
+    t += `<tr><th>${d.getMonth() + 1}/${d.getDate()}</th><th class="number" id="${i}">${f[i]}<small>回</small></th></tr>`;
+    if (saikou < f[i]) saikou = f[i];
+    total += Number(f[i]);
+  }
+  t += '</table>';
+  document.getElementsByTagName('body')[0].innerHTML += t;
+  document.getElementById('saikou').innerHTML = saikou + '<small>回</small>';
+  document.getElementById('heikin').innerHTML = Math.round(total / f.length) + '<small>回</small>';
+  document.getElementById('total').innerHTML = total + '<small>回</small>';
+
+  const sc = document.getElementById('sc').getClientRects()[0].top;
+  const he = document.getElementsByTagName('html')[0].getClientRects()[0].height;
+  document.getElementById('sc').style.height = `${he - sc - 20}px`;
+
+  let input = 'plus';
+  document.getElementById('plus').onclick = () => {
+    document.getElementById(input).dataset.input = 0;
+    document.getElementById('plus').dataset.input = 1;
+    input = 'plus';
+  }
+
+  document.getElementsByClassName('table')[0].onclick = (e) => {
+    e = e.target.id;
+    if (e) {
+      document.getElementById(input).dataset.input = 0;
+      document.getElementById(e).dataset.input = 1;
+      input = e;
+    }
+  }
+
+  document.getElementById('change').onclick = () => {
+    let num = document.getElementById('num');
+    if (num.value) {
+      num = Number(num.value);
+      if (input == 'plus') {
+        f.unshift(num);
+      } else {
+        f[input] = num;
+      }
+      localStorage.setItem('fukkin', JSON.stringify(f));
+      location.reload();
+    }
+  };
+
+
+</script>
+
+</html>
