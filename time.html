@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #d4eef6;
+      font-size: 9vw;
+    }
+
+    input[type="number"] {
+      font-size: 1em;
+      text-align: center;
+      border-radius: 4vw;
+      border: solid black 0.5vw;
+    }
+
+    #y1,
+    #y2 {
+      width: 2.5em;
+    }
+
+    input[type="number"]:not(#y1):not(#y2) {
+      width: 1.3em;
+    }
+
+    .s {
+      transform: rotate(90deg);
+      display: inline-block;
+    }
+
+    #b1,
+    #b2 {
+      background: linear-gradient(0deg, rgb(165 165 165), rgb(255 255 255));
+      border-radius: 2vw;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <td><input type="number" id="y1">年</td>
+      <td><input type="number" id="m1">月</td>
+      <td><input type="number" id="d1">日</td>
+    </tr>
+    <tr>
+      <td><input type="number" id="h1">時</td>
+      <td><input type="number" id="">分</td>
+      <td style="text-align:center"><span id="b1">現在</span></td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center"><span class="s">~</span></td>
+    </tr>
+    <tr>
+      <td><input type="number" id="y2">年</td>
+      <td><input type="number" id="m2">月</td>
+      <td><input type="number" id="d2">日</td>
+    </tr>
+    <tr>
+      <td><input type="number" id="h2">時</td>
+      <td><input type="number" id="">分</td>
+      <td style="text-align:center"><span id="b2">現在</span></td>
+    </tr>
+  </table>
+
+
+  <script>
+
+
+  </script>
+</body>
+
+</html>
