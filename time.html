@@ -145,16 +145,11 @@
       let d2 = new Date(t2[0].value || t2[0].placeholder, t2[1].value ? t2[1].value - 1 : t2[1].placeholder - 1,
         t2[2].value || t2[2].placeholder, t2[3].value || t2[3].placeholder, t2[4].value || t2[4].placeholder).getTime();
       date = d2 > d1 ? (d2 - d1) / 1000 : (d1 - d2) / 1000;
-      console.log(date)
 
       let t = document.getElementById('table');
-      t.getElementsByTagName('th')[0].innerText = Math.floor(date / 864) / 100 + '日';
-      t.getElementsByTagName('th')[1].innerText = Math.floor(date / 36) / 100 + '時間';
-      t.getElementsByTagName('th')[2].innerText = Math.floor(date / 0.6) / 100 + '分';
-
-
-
-
+      t.getElementsByTagName('th')[0].innerText = Math.floor(date / 86400) + '日';
+      t.getElementsByTagName('th')[1].innerText = Math.floor(date / 3600) + '時間';
+      t.getElementsByTagName('th')[2].innerText = date / 60 + '分';
     }
   </script>
 </body>
