@@ -11,6 +11,10 @@
       font-size: 8vw;
     }
 
+    table {
+      margin: auto;
+    }
+
     input[type="number"] {
       font-size: 1em;
       text-align: center;
@@ -36,6 +40,25 @@
     #b2 {
       background: linear-gradient(0deg, rgb(165 165 165), rgb(255 255 255));
       border-radius: 2vw;
+      font-size: 0.7em;
+    }
+
+    #button {
+      display: block;
+      margin: 3vw auto 0;
+      font-size: 6vw;
+      width: 3em;
+    }
+
+    #table {
+      margin: 10vw auto 0;
+      background-color: black;
+      width: 60%;
+      font-size: 0.7em;
+    }
+
+    th {
+      background-color: white;
     }
   </style>
 </head>
@@ -49,11 +72,11 @@
     </tr>
     <tr>
       <td><input type="number" id="h1">時</td>
-      <td><input type="number" id="">分</td>
-      <td style="text-align:center"><span id="b1">現在</span></td>
+      <td><input type="number" id="f1">分</td>
+      <td style="text-align:center; line-height:1em;"><span id="b1">クリア</span></td>
     </tr>
     <tr>
-      <td colspan="3" style="text-align:center"><span class="s">~</span></td>
+      <td colspan="3" style="text-align:center;"><span class="s">~</span></td>
     </tr>
     <tr>
       <td><input type="number" id="y2">年</td>
@@ -62,15 +85,77 @@
     </tr>
     <tr>
       <td><input type="number" id="h2">時</td>
-      <td><input type="number" id="">分</td>
-      <td style="text-align:center"><span id="b2">現在</span></td>
+      <td><input type="number" id="f2">分</td>
+      <td style="text-align:center; line-height:1em;"><span id="b2">クリア</span></td>
+    </tr>
+  </table>
+  <button id="button">実行</button>
+
+  <table id="table">
+    <tr>
+      <th>日</th>
+    </tr>
+    <tr>
+      <th>時間</th>
+    </tr>
+    <tr>
+      <th>分</th>
     </tr>
   </table>
 
 
   <script>
 
+    const t1 = [document.getElementById('y1'), document.getElementById('m1'), document.getElementById('d1'),
+    document.getElementById('h1'), document.getElementById('f1')];
+    document.getElementById('b1').onclick = () => {
+      t1[0].value = "";
+      t1[1].value = "";
+      t1[2].value = "";
+      t1[3].value = "";
+      t1[4].value = "";
+    }
 
+    const t2 = [document.getElementById('y2'), document.getElementById('m2'), document.getElementById('d2'),
+    document.getElementById('h2'), document.getElementById('f2')];
+    document.getElementById('b2').onclick = () => {
+      t2[0].value = "";
+      t2[1].value = "";
+      t2[2].value = "";
+      t2[3].value = "";
+      t2[4].value = "";
+    }
+
+    let date = new Date();
+    t1[0].placeholder = date.getFullYear();
+    t1[1].placeholder = date.getMonth() + 1;
+    t1[2].placeholder = date.getDate();
+    t1[3].placeholder = date.getHours();
+    t1[4].placeholder = date.getMinutes();
+    t2[0].placeholder = date.getFullYear();
+    t2[1].placeholder = date.getMonth() + 1;
+    t2[2].placeholder = date.getDate();
+    t2[3].placeholder = date.getHours();
+    t2[4].placeholder = date.getMinutes();
+
+
+    document.getElementById('button').onclick = () => {
+      let d1 = new Date(t1[0].value || t1[0].placeholder, t1[1].value ? t1[1].value - 1 : t1[1].placeholder - 1,
+        t1[2].value || t1[2].placeholder, t1[3].value || t1[3].placeholder, t1[4].value || t1[4].placeholder).getTime();
+      let d2 = new Date(t2[0].value || t2[0].placeholder, t2[1].value ? t2[1].value - 1 : t2[1].placeholder - 1,
+        t2[2].value || t2[2].placeholder, t2[3].value || t2[3].placeholder, t2[4].value || t2[4].placeholder).getTime();
+      date = d2 > d1 ? (d2 - d1) / 1000 : (d1 - d2) / 1000;
+      console.log(date)
+
+      let t = document.getElementById('table');
+      t.getElementsByTagName('th')[0].innerText = Math.floor(date / 864) / 100 + '日';
+      t.getElementsByTagName('th')[1].innerText = Math.floor(date / 36) / 100 + '時間';
+      t.getElementsByTagName('th')[2].innerText = Math.floor(date / 0.6) / 100 + '分';
+
+
+
+
+    }
   </script>
 </body>
 
