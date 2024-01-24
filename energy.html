@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>エナジーカウント</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    #text {
+      width: 50vw;
+      text-align: right;
+      font-size: 4vw;
+      margin-top: 5vw;
+      font-family: 'Kosugi', sans-serif;
+    }
+
+    #count {
+      text-align: center;
+      font-size: 15vw;
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    .button_area {
+      display: flex;
+      margin-top: 5vw;
+      width: 100vw;
+    }
+
+    .button_area>div {
+      width: 25vw;
+      display: inline-block;
+    }
+
+    .button_area button {
+      display: block;
+      height: 15vw;
+      font-size: 9vw;
+      border: none;
+      padding: 1vw;
+      margin: 0 2vw;
+    }
+
+    button:not(#cancel) {
+      width: 21vw;
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    #cancel {
+      width: 46vw;
+      font-family: 'Kosugi', sans-serif;
+    }
+
+    #no {
+      background-color: transparent;
+    }
+
+    #history {
+      margin-top: 6vw;
+    }
+
+    .history {
+      font-size: 6vw;
+      text-align: center;
+      height: 10vw;
+      line-height: 10vw;
+      font-family: 'Kosugi', sans-serif;
+    }
+
+    .history:nth-child(odd) {
+      background-color: #e0e0e0;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@1,600&family=Kosugi&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div id="text">使用したエナジー</div>
+  <div id="count">0</div>
+
+  <div class="button_area">
+    <div><button onclick=plus(1)>+1</button></div>
+    <div><button onclick=plus(2)>+2</button></div>
+    <div><button onclick=plus(3)>+3</button></div>
+    <div><button onclick=plus(4)>+4</button></div>
+  </div>
+  <div class="button_area">
+    <button onclick=plus(5)>+5</button>
+    <button id="no"></button>
+    <button id="cancel" onclick="cancel()">取り消し</button>
+  </div>
+
+  <div id="history"></div>
+
+  <button id="reset" onclick=reset()>初期化</button>
+
+  <script>
+    const counter = document.getElementById('count');
+    let count = Number(window.localStorage.getItem('energy')) || 0;
+    counter.innerText = count;
+    let history = window.localStorage.getItem('history') || [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    if (history.length > 5) {
+      history = history.split(',');
+      let hi = [];
+      for (let i = 0; i < 5; i++) {
+        hi.push([Number(history[i * 3]), Number(history[i * 3 + 1]), Number(history[i * 3 + 2])]);
+      }
+      history = hi;
+    }
+    function plus(p) {
+      counter.innerText = count += p;
+      history.push([p, Date.now(), 0]);//[プラス量,時刻,取り消しされたか]
+      history.shift();
+      window.localStorage.setItem('energy', count);
+      update_history();
+    }
+
+    const history_area = document.getElementById('history');
+    function update_history() {//使用歴を更新
+      let history_list = '';
+      for (let i = 4; i > -1; i--) {
+        const h = history[i];
+        const d = new Date(h[1]);//使用した時刻
+        const time = [d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes()];
+        history_list += `<div class='history'>${h[0] < 0 ? '下記を取り消し' : `${h[2] ? '(' : ''}${h[0]}エナジー使用`}${h[2] ? ')' : ''} ${time[0]}/${time[1]} ${time[2]}:${time[3]}</div>`;
+      }
+      history_area.innerHTML = history_list;
+      window.localStorage.setItem('history', history);
+    }
+
+    function cancel() {
+      const n = history[4][0];
+      if (n <= 0) return;
+      history[4][2] = 1;
+      plus(-n);
+    }
+
+    function reset() {
+      let s;
+      do {
+        s = prompt('使用したエナジー(半角数字)');
+      } while (isNaN(s) || !s)
+      if (confirm(`リセットして ${s}エナジー でスタートしますか`)) {
+        window.localStorage.setItem('energy', s);
+        window.localStorage.removeItem('history');
+        window.location.reload();
+      }
+    }
+
+    update_history();
+  </script>
+</body>
+
+</html>
