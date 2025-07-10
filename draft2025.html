@@ -7,9 +7,21 @@
     <title>2025ドラフト候補</title>
 </head>
 <style>
+    html {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar {
+        display: none;
+    }
+
     body {
         margin: 0;
         padding: 0;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 
     body::-webkit-scrollbar {
@@ -23,7 +35,7 @@
         left: 0;
         width: 100vw;
         z-index: 100;
-         background-color: #fff;
+        background-color: #fff;
     }
 
     .player-list-scroll-container {
@@ -38,9 +50,11 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
-  .player-list-scroll-container::-webkit-scrollbar {
-    display: none;
-}
+
+    .player-list-scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+
     #list {
         display: flex;
         flex-direction: row;
@@ -194,7 +208,6 @@
     document.addEventListener('DOMContentLoaded', function () {
 
         const header = document.querySelector('.button-controls-container');
-        const playerListContainer = document.querySelector('.player-list-scroll-container');
 
         // ヘッダーの高さを動的に取得し、CSSカスタムプロパティとして設定する関数
         const headerHeight = header.offsetHeight; // ヘッダーの実際の高さを取得
