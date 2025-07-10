@@ -7,6 +7,37 @@
     <title>2025ドラフト候補</title>
 </head>
 <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    .button-controls-container {
+        position: fixed;
+        /* 画面に固定 */
+        top: 0;
+        left: 0;
+        width: 100vw;
+        z-index: 100;
+    }
+
+    .player-list-scroll-container {
+        /* JavaScriptでこのCSSカスタムプロパティの値を設定する */
+        /* 初期値として安全な値を設定しておく */
+        margin-top: var(--header-height, 100px);
+        height: calc(100vh - var(--header-height, 100px));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+
+        /* 選手一覧のスクロールバーを非表示にする */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
     #list {
         display: flex;
         flex-direction: row;
@@ -57,7 +88,6 @@
     table {
         width: 100vw;
         border-collapse: collapse;
-        margin-bottom: 10px;
         font-family: sans-serif;
     }
 
@@ -104,57 +134,68 @@
     }
 </style>
 
-<body style="margin: 0;">
+<body>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yuji+Mai&display=swap" rel="stylesheet">
-    <table>
-        <tr>
-            <th class="position">投手</th>
-            <th class="position">捕手</th>
-            <th class="position">内野手</th>
-            <th class="position">外野手</th>
-        </tr>
-        <tr>
-            <td><button class="onoff is-on" data-target="pitcher">ON</button></td>
-            <td><button class="onoff is-on" data-target="catcher">ON</button></td>
-            <td><button class="onoff is-on" data-target="infielder">ON</button></td>
-            <td><button class="onoff is-on" data-target="outfielder">ON</button></td>
-        </tr>
-    </table>
-    <div id="list">
-        <div class="pitcher">竹丸 和幸</div>
-        <div class="infielder">髙橋 隆慶</div>
-        <div class="outfielder">村上 裕一郎</div>
-        <div class="pitcher">増居 翔太</div>
-        <div class="catcher">萩原 義輝</div>
-        <div class="pitcher">富重 英二郎</div>
-        <div class="infielder">石井 巧</div>
-        <div class="pitcher">川原 嗣貴</div>
-        <div class="pitcher">神野 竜速</div>
-        <div class="pitcher">中岡 大河</div>
-        <div class="pitcher">冨士 隼斗</div>
-        <div class="infielder">松浦 佑星</div>
-        <div class="infielder">池田 凛</div>
-        <div class="pitcher">篠崎 国忠</div>
-        <div class="pitcher">高橋 快秀</div>
-        <div class="infielder">成瀬 脩人</div>
-        <div class="pitcher">後藤 凌寿</div>
-        <div class="pitcher">池村 健太郎</div>
-        <div class="pitcher">尾崎 完太</div>
-        <div class="pitcher">谷脇 弘起</div>
-        <div class="outfielder">海老根 優大</div>
-        <div class="pitcher">沢山 優介</div>
-        <div class="infielder">熊田 任洋</div>
-        <div class="pitcher">田中 大聖</div>
-        <div class="outfielder">笹浪 竜</div>
-        <!-- <div class="po"></div> -->
+    <div class="button-controls-container">
+        <table>
+            <tr>
+                <th class="position">投手</th>
+                <th class="position">捕手</th>
+                <th class="position">内野手</th>
+                <th class="position">外野手</th>
+            </tr>
+            <tr>
+                <td><button class="onoff is-on" data-target="pitcher">ON</button></td>
+                <td><button class="onoff is-on" data-target="catcher">ON</button></td>
+                <td><button class="onoff is-on" data-target="infielder">ON</button></td>
+                <td><button class="onoff is-on" data-target="outfielder">ON</button></td>
+            </tr>
+        </table>
+    </div>
+    <div class="player-list-scroll-container">
+        <div id="list">
+            <div class="pitcher">竹丸 和幸</div>
+            <div class="infielder">髙橋 隆慶</div>
+            <div class="outfielder">村上 裕一郎</div>
+            <div class="pitcher">増居 翔太</div>
+            <div class="catcher">萩原 義輝</div>
+            <div class="pitcher">富重 英二郎</div>
+            <div class="infielder">石井 巧</div>
+            <div class="pitcher">川原 嗣貴</div>
+            <div class="pitcher">神野 竜速</div>
+            <div class="pitcher">中岡 大河</div>
+            <div class="pitcher">冨士 隼斗</div>
+            <div class="infielder">松浦 佑星</div>
+            <div class="infielder">池田 凛</div>
+            <div class="pitcher">篠崎 国忠</div>
+            <div class="pitcher">高橋 快秀</div>
+            <div class="infielder">成瀬 脩人</div>
+            <div class="pitcher">後藤 凌寿</div>
+            <div class="pitcher">池村 健太郎</div>
+            <div class="pitcher">尾崎 完太</div>
+            <div class="pitcher">谷脇 弘起</div>
+            <div class="outfielder">海老根 優大</div>
+            <div class="pitcher">沢山 優介</div>
+            <div class="infielder">熊田 任洋</div>
+            <div class="pitcher">田中 大聖</div>
+            <div class="outfielder">笹浪 竜</div>
+            <!-- <div class="po"></div> -->
 
+        </div>
     </div>
 </body>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+
+        const header = document.querySelector('.button-controls-container');
+        const playerListContainer = document.querySelector('.player-list-scroll-container');
+
+        // ヘッダーの高さを動的に取得し、CSSカスタムプロパティとして設定する関数
+        const headerHeight = header.offsetHeight; // ヘッダーの実際の高さを取得
+        document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
 
         const list = document.getElementById('list');
         const players = list.getElementsByTagName('div');
