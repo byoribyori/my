@@ -8,17 +8,15 @@
 </head>
 <style>
     #list {
-        width: 400px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        margin: 30px auto;
     }
 
     #list>div {
-        width: 198px;
+        width: calc(50vw - 2px);
         font-family: "Yuji Mai", serif;
-        font-size: 33px;
+        font-size: 8vw;
         text-align: center;
         border: 1px solid black;
     }
@@ -57,9 +55,9 @@
 
     /* テーブルの基本的なスタイル */
     table {
-        width: 100%;
+        width: 100vw;
         border-collapse: collapse;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         font-family: sans-serif;
     }
 
@@ -72,6 +70,7 @@
 
     th.position {
         background-color: #f2f2f2;
+        font-size: 4vw;
         font-weight: bold;
         color: #333;
     }
@@ -82,23 +81,20 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 1em;
+        font-size: 4vw;
         transition: background-color 0.3s ease, color 0.3s ease;
-        width: 80px;
-        /* ボタンの幅を固定 */
+        width: 19vw;
     }
 
     /* ON状態のボタンのスタイル */
     button.onoff.is-on {
         background-color: #4CAF50;
-        /* 緑色 */
         color: white;
     }
 
     /* OFF状態のボタンのスタイル */
     button.onoff.is-off {
         background-color: #f44336;
-        /* 赤色 */
         color: white;
     }
 
