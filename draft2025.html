@@ -366,6 +366,7 @@
         }
 
         list.addEventListener('click', (e) => {
+            if(e.target.id.indexOf('player')==-1)return;
             if (confirm(`${e.target.innerText}選手が\n指名されました`)) {
                 shimei.push(e.target.id.match(/\d+/)[0]);//idの数字部分
                 localStorage.setItem('shimei', JSON.stringify(shimei))
